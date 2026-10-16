@@ -1,0 +1,136 @@
+erDiagram
+    USER_ACCOUNT ||--o{ USER_ROLE : receives
+    BUSINESS_ROLE ||--o{ USER_ROLE : defines
+    USER_ACCOUNT ||--o{ DIRECTOR_LIBRARY : manages
+    LIBRARY ||--o{ DIRECTOR_LIBRARY : assigned_to
+    BOOK_CATEGORY ||--o{ BOOK_TITLE : classifies
+    BOOK_TITLE ||--o{ BOOK_COPY : has
+    LIBRARY ||--o{ BOOK_COPY : currently_holds
+    USER_ACCOUNT ||--o{ BOOK_COPY : registers
+    USER_ACCOUNT ||--o{ LOAN : borrows
+    BOOK_COPY ||--o{ LOAN : circulates_as
+    LIBRARY ||--o{ LOAN : checkout_location
+    LIBRARY o|--o{ LOAN : return_location
+    USER_ACCOUNT ||--o{ DONATION : submits
+    LIBRARY ||--o{ DONATION : receives
+    DONATION ||--|{ DONATION_ITEM : contains
+    BOOK_TITLE ||--o{ DONATION_ITEM : offered_title
+    DONATION_ITEM o|--o{ BOOK_COPY : creates
+    USER_ACCOUNT ||--o{ VISIT : visits
+    LIBRARY ||--o{ VISIT : visited_at
+    BOOK_COPY ||--o{ INVENTORY_ADJUSTMENT : corrected_by
+    USER_ACCOUNT ||--o{ INVENTORY_ADJUSTMENT : performs
+    USER_ACCOUNT ||--o{ AUDIT_EVENT : acts_in
+    LIBRARY o|--o{ AUDIT_EVENT : scopes
+
+    USER_ACCOUNT {
+        BIGINT UserID PK
+        VARCHAR DisplayName
+        VARCHAR Email UK
+        BOOLEAN IsActive
+        DATETIME CreatedAt
+    }
+    BUSINESS_ROLE {
+        VARCHAR RoleCode PK
+        VARCHAR RoleName UK
+        VARCHAR RoleDescription
+    }
+    USER_ROLE {
+        BIGINT UserID PK,FK
+        VARCHAR RoleCode PK,FK
+        DATETIME AssignedAt
+    }
+    LIBRARY {
+        BIGINT LibraryID PK
+        VARCHAR LibraryName UK
+        VARCHAR AddressLine1
+        VARCHAR City
+        CHAR StateCode
+        VARCHAR PostalCode
+        ENUM LibraryStatus
+    }
+    DIRECTOR_LIBRARY {
+        BIGINT UserID PK,FK
+        BIGINT LibraryID PK,FK
+        DATETIME AssignedAt
+    }
+    BOOK_CATEGORY {
+        SMALLINT CategoryID PK
+        VARCHAR CategoryName UK
+        VARCHAR CategoryDescription
+    }
+    BOOK_TITLE {
+        BIGINT BookTitleID PK
+        CHAR ISBN13 UK
+        VARCHAR Title
+        VARCHAR AuthorName
+        SMALLINT CategoryID FK
+    }
+    BOOK_COPY {
+        BIGINT BookCopyID PK
+        BIGINT BookTitleID FK
+        BIGINT CurrentLibraryID FK
+        ENUM CopyStatus
+        ENUM RegistrationSource
+        BIGINT DonationItemID FK
+        BIGINT RegisteredByUserID FK
+    }
+    LOAN {
+        BIGINT LoanID PK
+        BIGINT BookCopyID FK
+        BIGINT PatronUserID FK
+        BIGINT CheckoutLibraryID FK
+        BIGINT CheckoutRecordedByUserID FK
+        DATETIME CheckoutAt
+        BIGINT ReturnLibraryID FK
+        BIGINT ReturnRecordedByUserID FK
+        DATETIME ReturnedAt
+        ENUM LoanStatus
+        BIGINT ActiveBookCopyID UK
+    }
+    DONATION {
+        BIGINT DonationID PK
+        BIGINT DonorUserID FK
+        BIGINT ReceivingLibraryID FK
+        ENUM DonationStatus
+        DATETIME SubmittedAt
+        DATETIME DecidedAt
+        BIGINT DecidedByUserID FK
+    }
+    DONATION_ITEM {
+        BIGINT DonationItemID PK
+        BIGINT DonationID FK
+        BIGINT BookTitleID FK
+        SMALLINT OfferedQuantity
+        SMALLINT AcceptedQuantity
+    }
+    VISIT {
+        BIGINT VisitID PK
+        BIGINT PatronUserID FK
+        BIGINT LibraryID FK
+        DATETIME VisitedAt
+        BIGINT RecordedByUserID FK
+        ENUM RecordingMethod
+    }
+    INVENTORY_ADJUSTMENT {
+        BIGINT AdjustmentID PK
+        BIGINT BookCopyID FK
+        BIGINT DirectorUserID FK
+        BIGINT PreviousLibraryID FK
+        BIGINT NewLibraryID FK
+        ENUM PreviousStatus
+        ENUM NewStatus
+        VARCHAR Reason
+    }
+    AUDIT_EVENT {
+        BIGINT AuditEventID PK
+        BIGINT ActorUserID FK
+        VARCHAR EventType
+        VARCHAR EntityType
+        BIGINT EntityID
+        DATETIME EventTimestamp
+        ENUM Outcome
+        BIGINT LibraryID FK
+        JSON ContextData
+    }
+

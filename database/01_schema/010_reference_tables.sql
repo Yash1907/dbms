@@ -1,0 +1,12 @@
+CREATE TABLE BusinessRole (
+    RoleCode VARCHAR(20) PRIMARY KEY,
+    RoleName VARCHAR(60) NOT NULL UNIQUE,
+    RoleDescription VARCHAR(255) NOT NULL
+) ENGINE = InnoDB;
+
+CREATE TABLE BookCategory (
+    CategoryID SMALLINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    CategoryName VARCHAR(80) NOT NULL UNIQUE,
+    CategoryDescription VARCHAR(255) NULL
+) ENGINE = InnoDB;
+
