@@ -33,7 +33,7 @@ The project will provide a normalized MySQL database that tracks physical book c
 | Director reconciliation of recorded inventory drift | Public-facing web or mobile application development |
 | Role-based access, audit history, reports, and database tests | Production authentication, notifications, and enterprise backup automation |
 
-## 4. Stakeholders, roles, and entitlements
+## 4. Stakeholders and user roles
 
 One user may hold multiple roles. A director may manage one or more assigned libraries. Director authority is scoped to assigned libraries; it is not automatically global.
 
@@ -99,7 +99,7 @@ Roles above are business roles stored in the schema. MySQL roles and grants prov
 
 All identities and contact values used for implementation and demonstration are synthetic. Price is not stored because the system does not perform valuation, purchasing, fines, insurance, or sales. Availability and quantity are derived from individual copy records rather than maintained as an independently editable quantity.
 
-## 7. Business and validation rules
+## 7. Business rules and validation rules
 
 | ID | Business rule | Planned database enforcement |
 |---|---|---|
@@ -121,16 +121,16 @@ All identities and contact values used for implementation and demonstration are 
 
 ## 8. Reports and queries
 
-| ID | Report/query | Inputs | Required result |
+| ID | Report/query name | Purpose | Required result |
 |---|---|---|---|
-| RQ-01 | Available catalog | Library ID; optional category | Library, title, author, category, available-copy count; title order |
-| RQ-02 | Patron active loans | Authorized patron identity | Copy ID, title, checkout library and time; oldest checkout first |
-| RQ-03 | Patron borrowing history | Authorized patron identity; optional date range | Copy/title, checkout and return timestamps, originating and return libraries, loan state |
-| RQ-04 | Title demand | Required start/end timestamps; optional library | Title, distinct-patron count, checkout count; descending distinct-patron count then title |
-| RQ-05 | Patron visit history | Authorized patron identity; optional date range | Library, visit timestamp, recording method; newest first |
-| RQ-06 | Assigned-library inventory | Director identity and assigned library | Copy, title, recorded location, copy status, active-loan indicator |
-| RQ-07 | Donation status | Donor identity or assigned director | Donation, receiving library, items, offered/accepted counts, status and decision time |
-| RQ-08 | Audit history | Authorized director and assigned library or affected record | Actor, event type, timestamp, affected entity/ID, result and context |
+| RQ-01 | Available catalog | Show what patrons can borrow at a selected library | Library and optional category filter; title, author, category, available-copy count; title order |
+| RQ-02 | Patron active loans | Show a patron's currently borrowed copies | Authorized patron; copy ID, title, checkout library and time; oldest checkout first |
+| RQ-03 | Patron borrowing history | Show a patron's completed and active circulation | Authorized patron and optional date range; copy/title, checkout and return timestamps, libraries, loan state |
+| RQ-04 | Title demand | Identify titles used by the most distinct patrons | Required start/end timestamps and optional library; title, distinct-patron count, checkout count; descending demand |
+| RQ-05 | Patron visit history | Show explicit visits recorded for a patron | Authorized patron and optional date range; library, visit timestamp, recording method; newest first |
+| RQ-06 | Assigned-library inventory | Show recorded inventory for a director's assigned library | Director and assigned library; copy, title, recorded location, copy status, active-loan indicator |
+| RQ-07 | Donation status | Show submission and decision progress | Donor or assigned director; donation, receiving library, items, offered/accepted counts, status and decision time |
+| RQ-08 | Audit history | Review attributable changes for an authorized scope | Director and assigned library or affected record; actor, event type, timestamp, entity/ID, result and context |
 
 ## 9. Assumptions and constraints
 
@@ -176,36 +176,17 @@ Traceability note: Every FR requirement is mapped in the TDD to tables, constrai
 
 ### Feedback disposition
 
-`Adopted` means the recommendation was added substantially as proposed. `Adapted` means the underlying concern was accepted but implemented in a form chosen for this project's scope. `Not adopted` means the recommendation or implied feature was deliberately excluded, with the reason recorded below.
+This table follows the section headings and recommendations in the instructor feedback document. `Adopted` means the recommendation was added substantially as proposed. `Adapted` means the concern was addressed with a project-specific implementation. `Not adopted` identifies a proposed permission or feature that the feedback made conditional and that was excluded for a stated reason.
 
 | Feedback topic | Disposition | Revision and rationale |
 |---|---|---|
-| Clarify who records borrowing and returns | Adopted | FR-03 and FR-04 allow a registered patron to record personal activity or an assigned director to record it for the patron. This makes every circulation event attributable. |
-| Require patron registration | Adopted | Anonymous checkout is outside scope. Patron-role and active-user validation are explicit in BR-07 and the checkout/return workflows. |
-| Decide whether activity may occur outside the system | Adopted | Anonymous or unrecorded borrowing, returns, and donations are excluded from the modeled workflow so recorded circulation remains auditable. |
-| Decide whether a checked-out book must be returned | Adopted | A checkout creates an active loan that is expected to be returned. Permanent taking, due dates, fines, and notifications are outside scope. |
-| Decide whether a copy may be returned elsewhere | Adopted | FR-04 permits return to another participating active library and updates the copy's current location. This supports the real movement of copies without adding shipping or transfer workflows. |
-| Distinguish recorded from verified physical inventory | Adapted | The system reports recorded inventory, not independently verified physical inventory. FR-09 adds director reconciliation when observed inventory differs, with prior/new values and a reason. |
-| Convert stakeholder descriptions into entitlements | Adopted | Section 4 now includes a permission matrix defining what patrons, donors, and directors may view or change. Director authority is limited to assigned libraries. |
-| Clarify multiple roles and director assignments | Adopted | One user may hold multiple roles and one director may manage multiple libraries through explicit role and assignment relationships. |
-| Decide whether roles are business roles or database roles | Adapted | Both layers are retained: schema-level business roles express requirements, while representative MySQL roles, grants, views, and procedures demonstrate technical enforcement. One MySQL account per patron is not required. |
-| Rewrite and expand the functional requirements | Adapted | The three vague original requirements were replaced by thirteen numbered, testable requirements covering registration, catalog access, circulation, donations, visits, reports, reconciliation, authorization, audit, library status, and retries. IDs were reorganized to preserve a coherent final requirement set rather than copying the proposed list verbatim. |
-| Separate book titles from physical copies | Adopted | `BookTitle` stores shared title/author/category information and `BookCopy` stores each physical copy, location, status, and registration source. This supports multiple copies and independent circulation. |
-| Explain or remove price | Adopted | Price was removed because the project performs no purchasing, valuation, fines, insurance, or sales. Keeping it would add unused and unexplained data. |
-| Decide whether quantity is stored or calculated | Adopted | Quantity and availability are calculated from individual `BookCopy` rows. No independently editable quantity is stored, preventing disagreement between a count and copy-level state. |
-| Clarify library visits | Adopted | Visits are explicit `Visit` events rather than being inferred from circulation. A patron may self-record a visit, or an assigned director may record it for the patron. No passive tracking is introduced. |
-| Define checkout, return, donation, and reconciliation workflows | Adopted | Requirements, business rules, and acceptance tests now state the actor, preconditions, state changes, rejection behavior, and audit outcome for each retained workflow. |
-| Replace foreign-key enforcement for availability | Adopted | Availability is enforced through controlled transactional logic and copy state. Foreign keys are used only for referential integrity, not as a substitute for workflow validation. |
-| Address simultaneous checkout requests | Adopted | BR-03 through BR-05 require at most one active loan, a locking read, a unique active-copy key, and a transaction that changes the loan and copy together. |
-| Make reports precise | Adopted | Section 8 now defines inputs, output fields, aggregation, filters, and ordering for eight operational reports. |
-| Define high demand and its time window | Adapted | High demand is defined as the number of distinct patrons checking out a title during a required date range, with an optional library filter. Checkout count is also returned as secondary context. |
-| Replace the original acceptance criteria | Adopted | Section 10 uses observable setup/action/outcome tests, including valid and unavailable checkout, cross-library return, duplicate return, unauthorized access, report fixtures, reconciliation, and audit immutability. |
-| Add auditability and recovery behavior | Adapted | Successful state changes create append-only audit evidence, while transactions roll back partial work and reject invalid or repeated requests. Persistent failed-attempt logging is excluded because authentication/application logging is outside the database scope and rolled-back requests must not create false circulation history. |
-| Preserve completed history | Adopted | Loans are closed rather than overwritten, inventory corrections are stored as immutable events, and audit and adjustment history cannot be silently updated or deleted. |
-| Remove the supplier assumption | Adopted | The unrelated supplier statement was removed. Purchasing and supplier management are explicitly out of scope. |
-| Use consistent patron terminology | Adopted | `Reader` and `Customer` were replaced by `Patron` throughout the final requirements and data model. |
-| Resolve contact-data inconsistency | Adopted | The FRD states that every identity and contact value used for implementation and demonstration is synthetic. Real personal data and credentials are excluded. |
-| Define library status | Adopted | Library status means operational `ACTIVE` or `INACTIVE`. Inactive libraries retain history but cannot receive new operational activity. |
-| Add a geographic map | Not adopted | "Map" was clarified as a database association between libraries and copies. Geographic interfaces, routing, and GPS are unrelated to the database deliverables. |
-| Demonstrate security with cryptographic/dataflow analysis | Not adopted | Security is tested through roles, assignments, controlled procedures, denied access, and immutable audit records. Cryptographic/dataflow analysis is unrelated to these database workflows and outside scope. |
-| Demonstrate ACID behavior through catalog retrieval | Not adopted | Read-only catalog retrieval does not demonstrate atomicity. Transactions are instead tested on checkout, return, donation acceptance, and reconciliation, where related rows must change together or roll back. |
+| Clarify the operating model | Adopted | Sections 3, 5, 7, and 9 now identify who records checkout and return activity, require registered and attributable actors, define return behavior, allow a participating return location, distinguish recorded from observed inventory, and provide audited reconciliation. These revisions remove ambiguity about how an honor-system library produces reliable database records. |
+| Turn roles into entitlements | Adapted | Section 4 adds a permission matrix for patrons, donors, and directors; supports multiple business roles and multiple director-library assignments; and limits director actions to assigned libraries. Business roles are enforced through schema relationships and controlled operations, with representative MySQL privileges documented in the TDD. |
+| Director access to another patron's contact details | Not adopted | The proposed permission was conditional on explicit justification. No retained requirement needs directors to retrieve another patron's contact details, so that access was excluded to keep private data outside operational reports. |
+| Expand and rewrite the functional requirements | Adopted | The three broad original requirements were replaced by thirteen numbered, testable requirements covering every retained capability: copy registration, catalog access, circulation, donations, visits, private history, demand reporting, reconciliation, authorization, audit evidence, library status, and retry safety. This supports direct traceability to design and tests. |
+| Distinguish book titles from physical copies | Adopted | The model separates shared `BookTitle` data from individual `BookCopy` records so copies of one title can have different locations and states. Price was removed because the project performs no valuation or sales; quantity is derived from copy rows; visits are recorded explicitly; and library-to-book collections are modeled as relationships. |
+| Define workflows and business-rule enforcement | Adopted | Checkout, return, donation, and reconciliation now specify actors, preconditions, state changes, rejection behavior, and audit results. Availability is enforced by transactional procedure logic rather than foreign keys alone. A locking read and unique active-copy key address simultaneous checkout requests, and failed operations roll back without partial changes. |
+| Make reports precise enough to drive queries and indexes | Adopted | Section 8 defines the purpose, inputs, output columns, filters, aggregation, and ordering for each report. Demand uses a required date window and a defined distinct-patron measure, with checkout count retained as supporting context. These definitions are specific enough to implement and verify in SQL. |
+| Replace the acceptance criteria with observable tests | Adopted | Section 10 replaces map rendering, cryptographic/dataflow language, and catalog-based ACID claims with setup/action/outcome tests for availability, concurrent checkout, return, unauthorized history access, known report fixtures, rollback, retries, reconciliation, and immutable audit evidence. The tests now measure the requirements they claim to validate. |
+| Add auditability and resiliency requirements | Adapted | Successful state-changing operations require attributable, append-only audit evidence; transactions roll back incomplete work; repeated requests are rejected safely; inventory drift is corrected through recorded reconciliation; and the build initializes synthetic data reproducibly. Failed-attempt logging is kept separate from successful business-event history, as the feedback recommends. |
+| Clean up inconsistent assumptions and terminology | Adopted | The unrelated supplier assumption was removed; `Reader` and `Customer` were standardized to `Patron`; demonstration identities and contact values are explicitly synthetic; library status is defined as operational `ACTIVE` or `INACTIVE`; and generic report labels were replaced by concrete results. |

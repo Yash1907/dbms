@@ -20,12 +20,12 @@ The implementation contains fourteen base tables. Availability and quantity are 
 
 | Component | Selected technology/tool | Purpose |
 |---|---|---|
-| DBMS | MySQL Server 8.0+ / InnoDB | Relational storage, constraints, transactions, routines, roles |
-| SQL client | MySQL command-line client; MySQL Workbench optional | Build, query, and inspect the database |
-| Modeling | draw.io-compatible XML; Mermaid review source | Editable ERD and portable diagram source |
+| Database management system | MySQL Server 8.0+ / InnoDB | Relational storage, constraints, transactions, routines, roles |
+| Database client/IDE | MySQL command-line client; MySQL Workbench | Build, query, and inspect the database |
+| Modeling tool | draw.io-compatible XML; Mermaid review source | Create the ERD and portable diagram source |
 | Documentation | Markdown and PDF | Versionable sources and submission artifacts |
 | Build | PowerShell, Git, exact Git tag | Reproducible fresh database creation |
-| Source control | Git/GitHub after repository initialization | Immutable release tag and history |
+| Source control, if used | Git/GitHub | Immutable release tag and history |
 | Operating environment | Windows; MySQL 8.x | Primary classroom/test platform |
 
 ## 4. Architecture and scope
@@ -348,7 +348,7 @@ The important checkout index path begins with copy identity for the locked point
 
 The validation script implements RQ-04 with a half-open interval (`>= start`, `< end`) to avoid overlapping date windows, and includes `EXPLAIN FORMAT=TREE` for patron loan history.
 
-## 12. Security, privacy, backup, and recovery
+## 12. Security, privacy, and backup assumptions
 
 - All sample names, addresses, and `.test` emails are fictional.
 - Business authorization is enforced with `UserRole`, `DirectorLibrary`, functions, and stored procedures.
@@ -361,7 +361,7 @@ The validation script implements RQ-04 with a half-open interval (`>= start`, `<
 
 ## 13. Test plan and acceptance criteria
 
-| Test | Requirement/rule | Action | Expected result | Automated evidence |
+| Test ID | Requirement/rule | Test action | Expected result | Actual result/pass-fail |
 |---|---|---|---|---|
 | T-01 | FR-01/BR-08 | Assigned director registers copy | Copy and audit inserted | Procedure and fixture/query |
 | T-02 | FR-01/BR-08 | Unassigned director registers copy | Rejected; no copy | Smoke test PASS |
@@ -379,7 +379,7 @@ The validation script implements RQ-04 with a half-open interval (`>= start`, `<
 | T-14 | FR-12/BR-11 | Deactivate assigned library and submit activity | New activity rejected; history retained | Procedure/query |
 | T-15 | Build | Fresh exact-tag build | All manifest scripts and validation succeed | Build log |
 
-The repository contains expected-result SQL; actual results/pass-fail should be captured when MySQL is available and during the user's demonstration.
+The repository contains expected-result SQL. The database build completed successfully on MySQL 8.0.42; individual PASS/FAIL result rows should be captured during the recorded demonstration.
 
 ## 14. Requirement traceability
 
@@ -398,16 +398,3 @@ The repository contains expected-result SQL; actual results/pass-fail should be 
 | FR-11 | Actor -> AuditEvent -> affected record | procedure audit inserts, immutable triggers | T-13, RQ-08 |
 | FR-12 | Library status and historical FKs | sp_SetLibraryStatus, procedure checks | T-14 |
 | FR-13 | Loan and generated active-copy key | state validation, UNIQUE, locking read | T-05, T-07 |
-
-## Submission quality checklist
-
-- FRD, TDD, ERD, schema, routines, tests, and sample data use the same entity and requirement names.
-- The draw.io ERD contains every base entity, primary key, foreign key, and major relationship.
-- Every table and column in the executable schema is described in this TDD.
-- Every significant functional requirement maps to enforcement and test evidence.
-- The manifest lists every SQL file once in dependency order.
-- The build uses the immutable requested Git tag and records the resolved commit.
-- The build refuses destructive replacement unless the operator explicitly opts in.
-- All sample identities are fictional and all credentials remain outside the repository.
-- Validation includes objects, row counts, reports, an execution plan, positive tests, and negative tests.
-- The live demonstration remains a separate student activity, as requested.

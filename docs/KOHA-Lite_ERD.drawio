@@ -1,45 +1,114 @@
-<mxfile host="app.diagrams.net" modified="2026-10-16T00:00:00.000Z" agent="Codex" version="24.7.17" type="device">
+<mxfile host="app.diagrams.net" agent="Codex">
   <diagram id="koha-lite-erd" name="KOHA-Lite ERD">
-    <mxGraphModel dx="1800" dy="1200" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="2200" pageHeight="1700" math="0" shadow="0">
+    <mxGraphModel dx="1481" dy="768" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="2200" pageHeight="1700" math="0" shadow="0">
       <root>
-        <mxCell id="0"/>
-        <mxCell id="1" parent="0"/>
-        <mxCell id="title" value="KOHA-Lite Entity-Relationship Diagram&#xa;PK = primary key, FK = foreign key, UQ = unique" style="text;html=1;align=center;verticalAlign=middle;fontSize=22;fontStyle=1" vertex="1" parent="1"><mxGeometry x="600" y="20" width="900" height="70" as="geometry"/></mxCell>
-        <mxCell id="user" value="&lt;b&gt;UserAccount&lt;/b&gt;&lt;br&gt;PK UserID&lt;br&gt;UQ Email&lt;br&gt;DisplayName&lt;br&gt;IsActive&lt;br&gt;CreatedAt" style="rounded=0;whiteSpace=wrap;html=1;align=left;spacing=8;fillColor=#dae8fc;strokeColor=#6c8ebf" vertex="1" parent="1"><mxGeometry x="40" y="140" width="220" height="160" as="geometry"/></mxCell>
-        <mxCell id="role" value="&lt;b&gt;BusinessRole&lt;/b&gt;&lt;br&gt;PK RoleCode&lt;br&gt;UQ RoleName&lt;br&gt;RoleDescription" style="rounded=0;whiteSpace=wrap;html=1;align=left;spacing=8;fillColor=#dae8fc;strokeColor=#6c8ebf" vertex="1" parent="1"><mxGeometry x="40" y="350" width="220" height="120" as="geometry"/></mxCell>
-        <mxCell id="userrole" value="&lt;b&gt;UserRole&lt;/b&gt;&lt;br&gt;PK/FK UserID&lt;br&gt;PK/FK RoleCode&lt;br&gt;AssignedAt" style="rounded=0;whiteSpace=wrap;html=1;align=left;spacing=8;fillColor=#fff2cc;strokeColor=#d6b656" vertex="1" parent="1"><mxGeometry x="330" y="250" width="220" height="120" as="geometry"/></mxCell>
-        <mxCell id="library" value="&lt;b&gt;Library&lt;/b&gt;&lt;br&gt;PK LibraryID&lt;br&gt;UQ LibraryName&lt;br&gt;Address / City / NJ / PostalCode&lt;br&gt;LibraryStatus&lt;br&gt;CreatedAt" style="rounded=0;whiteSpace=wrap;html=1;align=left;spacing=8;fillColor=#d5e8d4;strokeColor=#82b366" vertex="1" parent="1"><mxGeometry x="620" y="120" width="250" height="170" as="geometry"/></mxCell>
-        <mxCell id="directorlib" value="&lt;b&gt;DirectorLibrary&lt;/b&gt;&lt;br&gt;PK/FK UserID&lt;br&gt;PK/FK LibraryID&lt;br&gt;AssignedAt" style="rounded=0;whiteSpace=wrap;html=1;align=left;spacing=8;fillColor=#fff2cc;strokeColor=#d6b656" vertex="1" parent="1"><mxGeometry x="330" y="80" width="220" height="120" as="geometry"/></mxCell>
-        <mxCell id="category" value="&lt;b&gt;BookCategory&lt;/b&gt;&lt;br&gt;PK CategoryID&lt;br&gt;UQ CategoryName&lt;br&gt;CategoryDescription" style="rounded=0;whiteSpace=wrap;html=1;align=left;spacing=8;fillColor=#e1d5e7;strokeColor=#9673a6" vertex="1" parent="1"><mxGeometry x="930" y="110" width="220" height="120" as="geometry"/></mxCell>
-        <mxCell id="booktitle" value="&lt;b&gt;BookTitle&lt;/b&gt;&lt;br&gt;PK BookTitleID&lt;br&gt;UQ ISBN13&lt;br&gt;Title&lt;br&gt;AuthorName&lt;br&gt;FK CategoryID&lt;br&gt;CreatedAt" style="rounded=0;whiteSpace=wrap;html=1;align=left;spacing=8;fillColor=#e1d5e7;strokeColor=#9673a6" vertex="1" parent="1"><mxGeometry x="1220" y="100" width="220" height="180" as="geometry"/></mxCell>
-        <mxCell id="bookcopy" value="&lt;b&gt;BookCopy&lt;/b&gt;&lt;br&gt;PK BookCopyID&lt;br&gt;FK BookTitleID&lt;br&gt;FK CurrentLibraryID&lt;br&gt;CopyStatus&lt;br&gt;RegistrationSource&lt;br&gt;FK DonationItemID&lt;br&gt;FK RegisteredByUserID&lt;br&gt;RegisteredAt" style="rounded=0;whiteSpace=wrap;html=1;align=left;spacing=8;fillColor=#e1d5e7;strokeColor=#9673a6" vertex="1" parent="1"><mxGeometry x="1510" y="100" width="250" height="220" as="geometry"/></mxCell>
-        <mxCell id="loan" value="&lt;b&gt;Loan&lt;/b&gt;&lt;br&gt;PK LoanID&lt;br&gt;FK BookCopyID&lt;br&gt;FK PatronUserID&lt;br&gt;FK CheckoutLibraryID / ActorID&lt;br&gt;CheckoutAt&lt;br&gt;FK ReturnLibraryID / ActorID&lt;br&gt;ReturnedAt&lt;br&gt;LoanStatus&lt;br&gt;UQ ActiveBookCopyID (generated)" style="rounded=0;whiteSpace=wrap;html=1;align=left;spacing=8;fillColor=#f8cecc;strokeColor=#b85450" vertex="1" parent="1"><mxGeometry x="1480" y="410" width="290" height="240" as="geometry"/></mxCell>
-        <mxCell id="donation" value="&lt;b&gt;Donation&lt;/b&gt;&lt;br&gt;PK DonationID&lt;br&gt;FK DonorUserID&lt;br&gt;FK ReceivingLibraryID&lt;br&gt;DonationStatus&lt;br&gt;SubmittedAt&lt;br&gt;DecidedAt&lt;br&gt;FK DecidedByUserID&lt;br&gt;DecisionNote" style="rounded=0;whiteSpace=wrap;html=1;align=left;spacing=8;fillColor=#ffe6cc;strokeColor=#d79b00" vertex="1" parent="1"><mxGeometry x="620" y="390" width="250" height="220" as="geometry"/></mxCell>
-        <mxCell id="donationitem" value="&lt;b&gt;DonationItem&lt;/b&gt;&lt;br&gt;PK DonationItemID&lt;br&gt;FK DonationID&lt;br&gt;FK BookTitleID&lt;br&gt;OfferedQuantity&lt;br&gt;AcceptedQuantity&lt;br&gt;UQ Donation + Title" style="rounded=0;whiteSpace=wrap;html=1;align=left;spacing=8;fillColor=#ffe6cc;strokeColor=#d79b00" vertex="1" parent="1"><mxGeometry x="960" y="410" width="240" height="170" as="geometry"/></mxCell>
-        <mxCell id="visit" value="&lt;b&gt;Visit&lt;/b&gt;&lt;br&gt;PK VisitID&lt;br&gt;FK PatronUserID&lt;br&gt;FK LibraryID&lt;br&gt;VisitedAt&lt;br&gt;FK RecordedByUserID&lt;br&gt;RecordingMethod" style="rounded=0;whiteSpace=wrap;html=1;align=left;spacing=8;fillColor=#f8cecc;strokeColor=#b85450" vertex="1" parent="1"><mxGeometry x="330" y="480" width="220" height="170" as="geometry"/></mxCell>
-        <mxCell id="adjustment" value="&lt;b&gt;InventoryAdjustment&lt;/b&gt;&lt;br&gt;PK AdjustmentID&lt;br&gt;FK BookCopyID&lt;br&gt;FK DirectorUserID&lt;br&gt;FK Previous/NewLibraryID&lt;br&gt;Previous/NewStatus&lt;br&gt;Reason&lt;br&gt;AdjustedAt" style="rounded=0;whiteSpace=wrap;html=1;align=left;spacing=8;fillColor=#f5f5f5;strokeColor=#666666" vertex="1" parent="1"><mxGeometry x="1240" y="730" width="270" height="200" as="geometry"/></mxCell>
-        <mxCell id="audit" value="&lt;b&gt;AuditEvent&lt;/b&gt;&lt;br&gt;PK AuditEventID&lt;br&gt;FK ActorUserID&lt;br&gt;EventType&lt;br&gt;EntityType / EntityID&lt;br&gt;EventTimestamp&lt;br&gt;Outcome&lt;br&gt;FK LibraryID&lt;br&gt;ContextData JSON" style="rounded=0;whiteSpace=wrap;html=1;align=left;spacing=8;fillColor=#f5f5f5;strokeColor=#666666" vertex="1" parent="1"><mxGeometry x="700" y="730" width="270" height="220" as="geometry"/></mxCell>
-
-        <mxCell id="e1" value="1 : many" edge="1" parent="1" source="user" target="userrole" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="e2" value="1 : many" edge="1" parent="1" source="role" target="userrole" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="e3" value="1 : many" edge="1" parent="1" source="user" target="directorlib" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="e4" value="1 : many" edge="1" parent="1" source="library" target="directorlib" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="e5" value="1 : many" edge="1" parent="1" source="category" target="booktitle" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="e6" value="1 : many" edge="1" parent="1" source="booktitle" target="bookcopy" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="e7" value="1 : many" edge="1" parent="1" source="library" target="bookcopy" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="e8" value="1 : many" edge="1" parent="1" source="bookcopy" target="loan" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="e9" value="1 : many" edge="1" parent="1" source="user" target="loan" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="e10" value="1 : many" edge="1" parent="1" source="user" target="donation" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="e11" value="1 : many" edge="1" parent="1" source="library" target="donation" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="e12" value="1 : many" edge="1" parent="1" source="donation" target="donationitem" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="e13" value="1 : many" edge="1" parent="1" source="booktitle" target="donationitem" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="e14" value="0..1 : many" edge="1" parent="1" source="donationitem" target="bookcopy" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="e15" value="1 : many" edge="1" parent="1" source="user" target="visit" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="e16" value="1 : many" edge="1" parent="1" source="library" target="visit" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="e17" value="1 : many" edge="1" parent="1" source="bookcopy" target="adjustment" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="e18" value="1 : many" edge="1" parent="1" source="user" target="adjustment" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="e19" value="1 : many" edge="1" parent="1" source="user" target="audit" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="e20" value="0..1 : many" edge="1" parent="1" source="library" target="audit" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title" parent="1" style="text;html=1;align=center;verticalAlign=middle;fontSize=22;fontStyle=1" value="KOHA-Lite Entity-Relationship Diagram&#xa;PK = primary key, FK = foreign key, UQ = unique" vertex="1">
+          <mxGeometry height="70" width="900" x="650" y="20" as="geometry" />
+        </mxCell>
+        <mxCell id="user" parent="1" style="rounded=0;whiteSpace=wrap;html=1;align=left;spacing=8;fillColor=#dae8fc;strokeColor=#6c8ebf" value="&lt;b&gt;UserAccount&lt;/b&gt;&lt;br&gt;PK UserID&lt;br&gt;UQ Email&lt;br&gt;DisplayName&lt;br&gt;IsActive&lt;br&gt;CreatedAt" vertex="1">
+          <mxGeometry height="160" width="220" x="50" y="180" as="geometry" />
+        </mxCell>
+        <mxCell id="role" parent="1" style="rounded=0;whiteSpace=wrap;html=1;align=left;spacing=8;fillColor=#dae8fc;strokeColor=#6c8ebf" value="&lt;b&gt;BusinessRole&lt;/b&gt;&lt;br&gt;PK RoleCode&lt;br&gt;UQ RoleName&lt;br&gt;RoleDescription" vertex="1">
+          <mxGeometry height="120" width="220" x="70" y="610" as="geometry" />
+        </mxCell>
+        <mxCell id="userrole" parent="1" style="rounded=0;whiteSpace=wrap;html=1;align=left;spacing=8;fillColor=#fff2cc;strokeColor=#d6b656" value="&lt;b&gt;UserRole&lt;/b&gt;&lt;br&gt;PK/FK UserID&lt;br&gt;PK/FK RoleCode&lt;br&gt;AssignedAt" vertex="1">
+          <mxGeometry height="120" width="220" x="630" y="310" as="geometry" />
+        </mxCell>
+        <mxCell id="library" parent="1" style="rounded=0;whiteSpace=wrap;html=1;align=left;spacing=8;fillColor=#d5e8d4;strokeColor=#82b366" value="&lt;b&gt;Library&lt;/b&gt;&lt;br&gt;PK LibraryID&lt;br&gt;UQ LibraryName&lt;br&gt;Address / City / NJ / PostalCode&lt;br&gt;LibraryStatus&lt;br&gt;CreatedAt" vertex="1">
+          <mxGeometry height="170" width="250" x="1430" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="directorlib" parent="1" style="rounded=0;whiteSpace=wrap;html=1;align=left;spacing=8;fillColor=#fff2cc;strokeColor=#d6b656" value="&lt;b&gt;DirectorLibrary&lt;/b&gt;&lt;br&gt;PK/FK UserID&lt;br&gt;PK/FK LibraryID&lt;br&gt;AssignedAt" vertex="1">
+          <mxGeometry height="120" width="220" x="350" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="category" parent="1" style="rounded=0;whiteSpace=wrap;html=1;align=left;spacing=8;fillColor=#e1d5e7;strokeColor=#9673a6" value="&lt;b&gt;BookCategory&lt;/b&gt;&lt;br&gt;PK CategoryID&lt;br&gt;UQ CategoryName&lt;br&gt;CategoryDescription" vertex="1">
+          <mxGeometry height="120" width="220" x="1280" y="350" as="geometry" />
+        </mxCell>
+        <mxCell id="booktitle" parent="1" style="rounded=0;whiteSpace=wrap;html=1;align=left;spacing=8;fillColor=#e1d5e7;strokeColor=#9673a6" value="&lt;b&gt;BookTitle&lt;/b&gt;&lt;br&gt;PK BookTitleID&lt;br&gt;UQ ISBN13&lt;br&gt;Title&lt;br&gt;AuthorName&lt;br&gt;FK CategoryID&lt;br&gt;CreatedAt" vertex="1">
+          <mxGeometry height="180" width="220" x="1680" y="490" as="geometry" />
+        </mxCell>
+        <mxCell id="bookcopy" parent="1" style="rounded=0;whiteSpace=wrap;html=1;align=left;spacing=8;fillColor=#e1d5e7;strokeColor=#9673a6" value="&lt;b&gt;BookCopy&lt;/b&gt;&lt;br&gt;PK BookCopyID&lt;br&gt;FK BookTitleID&lt;br&gt;FK CurrentLibraryID&lt;br&gt;CopyStatus&lt;br&gt;RegistrationSource&lt;br&gt;FK DonationItemID&lt;br&gt;FK RegisteredByUserID&lt;br&gt;RegisteredAt" vertex="1">
+          <mxGeometry height="220" width="250" x="2060" y="180" as="geometry" />
+        </mxCell>
+        <mxCell id="loan" parent="1" style="rounded=0;whiteSpace=wrap;html=1;align=left;spacing=8;fillColor=#f8cecc;strokeColor=#b85450" value="&lt;b&gt;Loan&lt;/b&gt;&lt;br&gt;PK LoanID&lt;br&gt;FK BookCopyID&lt;br&gt;FK PatronUserID&lt;br&gt;FK CheckoutLibraryID / ActorID&lt;br&gt;CheckoutAt&lt;br&gt;FK ReturnLibraryID / ActorID&lt;br&gt;ReturnedAt&lt;br&gt;LoanStatus&lt;br&gt;UQ ActiveBookCopyID (generated)" vertex="1">
+          <mxGeometry height="240" width="290" x="2270" y="610" as="geometry" />
+        </mxCell>
+        <mxCell id="donation" parent="1" style="rounded=0;whiteSpace=wrap;html=1;align=left;spacing=8;fillColor=#ffe6cc;strokeColor=#d79b00" value="&lt;b&gt;Donation&lt;/b&gt;&lt;br&gt;PK DonationID&lt;br&gt;FK DonorUserID&lt;br&gt;FK ReceivingLibraryID&lt;br&gt;DonationStatus&lt;br&gt;SubmittedAt&lt;br&gt;DecidedAt&lt;br&gt;FK DecidedByUserID&lt;br&gt;DecisionNote" vertex="1">
+          <mxGeometry height="220" width="250" x="810" y="620" as="geometry" />
+        </mxCell>
+        <mxCell id="donationitem" parent="1" style="rounded=0;whiteSpace=wrap;html=1;align=left;spacing=8;fillColor=#ffe6cc;strokeColor=#d79b00" value="&lt;b&gt;DonationItem&lt;/b&gt;&lt;br&gt;PK DonationItemID&lt;br&gt;FK DonationID&lt;br&gt;FK BookTitleID&lt;br&gt;OfferedQuantity&lt;br&gt;AcceptedQuantity&lt;br&gt;UQ Donation + Title" vertex="1">
+          <mxGeometry height="170" width="240" x="1280" y="635" as="geometry" />
+        </mxCell>
+        <mxCell id="visit" parent="1" style="rounded=0;whiteSpace=wrap;html=1;align=left;spacing=8;fillColor=#f8cecc;strokeColor=#b85450" value="&lt;b&gt;Visit&lt;/b&gt;&lt;br&gt;PK VisitID&lt;br&gt;FK PatronUserID&lt;br&gt;FK LibraryID&lt;br&gt;VisitedAt&lt;br&gt;FK RecordedByUserID&lt;br&gt;RecordingMethod" vertex="1">
+          <mxGeometry height="170" width="220" x="420" y="810" as="geometry" />
+        </mxCell>
+        <mxCell id="adjustment" parent="1" style="rounded=0;whiteSpace=wrap;html=1;align=left;spacing=8;fillColor=#f5f5f5;strokeColor=#666666" value="&lt;b&gt;InventoryAdjustment&lt;/b&gt;&lt;br&gt;PK AdjustmentID&lt;br&gt;FK BookCopyID&lt;br&gt;FK DirectorUserID&lt;br&gt;FK Previous/NewLibraryID&lt;br&gt;Previous/NewStatus&lt;br&gt;Reason&lt;br&gt;AdjustedAt" vertex="1">
+          <mxGeometry height="200" width="270" x="1430" y="990" as="geometry" />
+        </mxCell>
+        <mxCell id="audit" parent="1" style="rounded=0;whiteSpace=wrap;html=1;align=left;spacing=8;fillColor=#f5f5f5;strokeColor=#666666" value="&lt;b&gt;AuditEvent&lt;/b&gt;&lt;br&gt;PK AuditEventID&lt;br&gt;FK ActorUserID&lt;br&gt;EventType&lt;br&gt;EntityType / EntityID&lt;br&gt;EventTimestamp&lt;br&gt;Outcome&lt;br&gt;FK LibraryID&lt;br&gt;ContextData JSON" vertex="1">
+          <mxGeometry height="230" width="270" x="1070" y="890" as="geometry" />
+        </mxCell>
+        <mxCell id="e1" edge="1" parent="1" source="user" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1" target="userrole" value="1 : many">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e2" edge="1" parent="1" source="role" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1" target="userrole" value="1 : many">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e3" edge="1" parent="1" source="user" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1" target="directorlib" value="1 : many">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e4" edge="1" parent="1" source="library" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1" target="directorlib" value="1 : many">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e5" edge="1" parent="1" source="category" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1" target="booktitle" value="1 : many">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e6" edge="1" parent="1" source="booktitle" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1" target="bookcopy" value="1 : many">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e7" edge="1" parent="1" source="library" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1" target="bookcopy" value="1 : many">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e8" edge="1" parent="1" source="bookcopy" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1" target="loan" value="1 : many">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e9" edge="1" parent="1" source="user" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1" target="loan" value="1 : many">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e10" edge="1" parent="1" source="user" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1" target="donation" value="1 : many">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e11" edge="1" parent="1" source="library" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1" target="donation" value="1 : many">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e12" edge="1" parent="1" source="donation" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1" target="donationitem" value="1 : many">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e13" edge="1" parent="1" source="booktitle" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1" target="donationitem" value="1 : many">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e14" edge="1" parent="1" source="donationitem" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1" target="bookcopy" value="0..1 : many">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e15" edge="1" parent="1" source="user" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1" target="visit" value="1 : many">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e16" edge="1" parent="1" source="library" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1" target="visit" value="1 : many">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e17" edge="1" parent="1" source="bookcopy" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1" target="adjustment" value="1 : many">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e18" edge="1" parent="1" source="user" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1" target="adjustment" value="1 : many">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e19" edge="1" parent="1" source="user" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1" target="audit" value="1 : many">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e20" edge="1" parent="1" source="library" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1" target="audit" value="0..1 : many">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
       </root>
     </mxGraphModel>
   </diagram>

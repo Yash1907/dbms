@@ -1,3 +1,27 @@
+%%{init: {
+  "theme": "base",
+  "themeVariables": {
+    "background": "#f8fafc",
+    "primaryColor": "#eaf2f8",
+    "primaryTextColor": "#102a43",
+    "primaryBorderColor": "#2f6f8f",
+    "lineColor": "#526777",
+    "tertiaryColor": "#ffffff",
+    "fontFamily": "Arial, Helvetica, sans-serif",
+    "fontSize": "13px"
+  },
+  "er": {
+    "diagramPadding": 24,
+    "layoutDirection": "LR",
+    "minEntityWidth": 130,
+    "minEntityHeight": 70,
+    "entityPadding": 12,
+    "stroke": "#2f6f8f",
+    "fill": "#eaf2f8",
+    "fontSize": 13,
+    "useMaxWidth": true
+  }
+}}%%
 erDiagram
     USER_ACCOUNT ||--o{ USER_ROLE : receives
     BUSINESS_ROLE ||--o{ USER_ROLE : defines
@@ -48,6 +72,7 @@ erDiagram
         CHAR StateCode
         VARCHAR PostalCode
         ENUM LibraryStatus
+        DATETIME CreatedAt
     }
     DIRECTOR_LIBRARY {
         BIGINT UserID PK,FK
@@ -65,6 +90,7 @@ erDiagram
         VARCHAR Title
         VARCHAR AuthorName
         SMALLINT CategoryID FK
+        DATETIME CreatedAt
     }
     BOOK_COPY {
         BIGINT BookCopyID PK
@@ -74,6 +100,7 @@ erDiagram
         ENUM RegistrationSource
         BIGINT DonationItemID FK
         BIGINT RegisteredByUserID FK
+        DATETIME RegisteredAt
     }
     LOAN {
         BIGINT LoanID PK
@@ -96,6 +123,7 @@ erDiagram
         DATETIME SubmittedAt
         DATETIME DecidedAt
         BIGINT DecidedByUserID FK
+        VARCHAR DecisionNote
     }
     DONATION_ITEM {
         BIGINT DonationItemID PK
@@ -121,6 +149,7 @@ erDiagram
         ENUM PreviousStatus
         ENUM NewStatus
         VARCHAR Reason
+        DATETIME AdjustedAt
     }
     AUDIT_EVENT {
         BIGINT AuditEventID PK
