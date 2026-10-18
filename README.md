@@ -6,7 +6,7 @@ KOHA-Lite is a MySQL 8 database for tracking books across participating Little F
 
 - `docs/FRD.md`, `output/docx/KOHA-Lite_FRD.docx`, and `output/pdf/KOHA-Lite_FRD.pdf`: functional requirements in source, Google Docs import, and submission formats
 - `docs/TDD.md`, `output/docx/KOHA-Lite_TDD.docx`, and `output/pdf/KOHA-Lite_TDD.pdf`: technical design in source, Google Docs import, and submission formats
-- `docs/KOHA-Lite_ERD.drawio`: editable draw.io entity-relationship model
+- `docs/KOHA-Lite_ERD.drawio` and `docs/KOHA-Lite_ERD.png`: editable draw.io entity-relationship model and exported image
 - `docs/KOHA-Lite_ERD.mmd` and `output/pdf/KOHA-Lite_ERD.pdf`: reviewable ERD source and PDF
 - `database/`: ordered schema, programmability, security, seed, and validation scripts
 - `build/build_database.ps1`: exact-tag Windows build script
