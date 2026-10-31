@@ -57,7 +57,7 @@ function Invoke-MySqlFile([string] $ScriptPath, [string] $Database) {
     $arguments = @(
         "--protocol=TCP", "--host=$dbHostName", "--port=$dbPortNumber",
         "--user=$dbAdminUser", "--database=$Database", "--show-warnings",
-        "--binary-mode", "--execute=source $($ScriptPath.Replace('\', '/'))"
+        "--execute=source $($ScriptPath.Replace('\', '/'))"
     )
     & mysql @arguments 2>> $errorLog | Tee-Object -FilePath $buildLog -Append
     if ($LASTEXITCODE -ne 0) { throw "SQL script failed: $ScriptPath" }
