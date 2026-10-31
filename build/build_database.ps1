@@ -28,7 +28,7 @@ $dbHostName = $env:DB_HOST
 $dbPortNumber = if ($env:DB_PORT) { $env:DB_PORT } else { "3306" }
 $dbAdminUser = $env:DB_ADMIN_USER
 $dbAdminPassword = $env:DB_ADMIN_PASSWORD
-$runId = "$(Get-Date -AsUTC -Format 'yyyyMMddTHHmmssZ')-$VersionTag"
+$runId = "$((Get-Date).ToUniversalTime().ToString('yyyyMMddTHHmmssZ'))-$VersionTag"
 $workDirectory = Join-Path (Get-Location) ".build-work\$Repository-$runId"
 $repositoryDirectory = Join-Path $workDirectory "repo"
 $logDirectory = Join-Path $workDirectory "logs"
@@ -37,7 +37,7 @@ $errorLog = Join-Path $logDirectory "error.log"
 New-Item -ItemType Directory -Force -Path $logDirectory | Out-Null
 
 function Write-BuildLog([string] $Message) {
-    $line = "$(Get-Date -AsUTC -Format 'yyyy-MM-ddTHH:mm:ssZ') | $Message"
+    $line = "$((Get-Date).ToUniversalTime().ToString('yyyy-MM-ddTHH:mm:ssZ')) | $Message"
     $line | Tee-Object -FilePath $buildLog -Append
 }
 
@@ -122,7 +122,7 @@ try {
 }
 catch {
     Write-BuildLog "BUILD FAILED: $($_.Exception.Message)"
-    Add-Content -LiteralPath $errorLog -Value "$(Get-Date -AsUTC -Format 'yyyy-MM-ddTHH:mm:ssZ') | $($_.Exception.Message)"
+    Add-Content -LiteralPath $errorLog -Value "$((Get-Date).ToUniversalTime().ToString('yyyy-MM-ddTHH:mm:ssZ')) | $($_.Exception.Message)"
     exit 1
 }
 finally {
